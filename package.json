@@ -1,0 +1,167 @@
+{
+  "name": "fe-kiro-runner",
+  "displayName": "Kiro Runner",
+  "description": "Run kiro-cli / MCP commands from VSCode",
+  "publisher": "rxc",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "kiro.startKiro",
+        "title": "Kiro: Start Kiro Chat"
+      },
+      {
+        "command": "kiro.mcpList",
+        "title": "Kiro: MCP Server List"
+      },
+      {
+        "command": "kiro.runFigma",
+        "title": "Kiro: Figma Component Generator"
+      },
+      {
+        "command": "kiro.runJira",
+        "title": "Kiro: Plan to Jira"
+      },
+      {
+        "command": "kiro.runNotion",
+        "title": "Kiro: Notion to Plan"
+      },
+      {
+        "command": "kiro.runPlan",
+        "title": "Kiro: Plan Executor"
+      },
+      {
+        "command": "kiro.runCustom",
+        "title": "Kiro: Run Custom Command"
+      },
+      {
+        "command": "kiro.runCodeReview",
+        "title": "Kiro: Run Code Review"
+      },
+      {
+        "command": "kiro.runFigma.terminal",
+        "title": "🎨 Figma Component Generator"
+      },
+      {
+        "command": "kiro.runJiraSpec.terminal",
+        "title": "📋 Spec to Jira"
+      },
+      {
+        "command": "kiro.runNotionSpec.terminal",
+        "title": "📝 Notion to Spec"
+      },
+      {
+        "command": "kiro.runSpec.terminal",
+        "title": "🚀 Spec Executor"
+      }
+    ],
+    "menus": {
+      "terminal/context": [
+        {
+          "submenu": "kiro.terminal.submenu",
+          "group": "kiro"
+        }
+      ],
+      "kiro.terminal.submenu": [
+        {
+          "command": "kiro.runNotionSpec.terminal",
+          "group": "1_workflow@1"
+        },
+        {
+          "command": "kiro.runJiraSpec.terminal",
+          "group": "1_workflow@2"
+        },
+        {
+          "command": "kiro.runSpec.terminal",
+          "group": "1_workflow@3"
+        },
+        {
+          "command": "kiro.runFigma.terminal",
+          "group": "1_workflow@4"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "kiro.quickPick",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "kiro.terminal.submenu",
+        "label": "⚡ Kiro"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "kiro-sidebar",
+          "title": "Kiro",
+          "icon": "resources/kiro.svg"
+        }
+      ]
+    },
+    "views": {
+      "kiro-sidebar": [
+        {
+          "type": "webview",
+          "id": "kiroPanel",
+          "name": "Kiro Runner",
+          "icon": "resources/kiro.svg"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Kiro Runner",
+      "properties": {
+        "kiro.customCommands": {
+          "type": "array",
+          "default": [],
+          "description": "Custom commands to show in the panel",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "command": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "build": "yarn run compile && vsce package --out build/",
+    "build:ci": "yarn run compile && vsce package --no-git-tag-version",
+    "install:local": "code --install-extension \"$(ls build/*.vsix | tail -1)\"",
+    "release": "yarn run build && node scripts/release.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  }
+}
