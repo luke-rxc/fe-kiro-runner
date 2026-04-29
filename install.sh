@@ -4,7 +4,7 @@
 
 set -e
 
-VSIX="dist/fe-kiro-runner-0.0.1.vsix"
+VSIX="build/fe-kiro-runner-0.0.1.vsix"
 EXTENSION_ID="rxc.fe-kiro-runner"
 
 echo "📦 Kiro Runner v0.0.1 설치 중..."

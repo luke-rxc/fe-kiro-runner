@@ -2,7 +2,7 @@
 /**
  * release.js
  * yarn run build 후 자동으로 호출됨
- * - dist/ 폴더에 .vsix 복사
+ * - build/ 폴더에 .vsix 복사
  * - CHANGELOG 업데이트 안내
  * - 설치 스크립트 재생성
  */
@@ -16,17 +16,17 @@ const version = pkg.version;
 const vsixName = `${pkg.name}-${version}.vsix`;
 const vsixPath = path.join(process.cwd(), 'build', vsixName);
 
-// ── 1. dist 폴더 준비 ──────────────────────────────────────────
-const distDir = path.join(process.cwd(), 'dist');
-if (!fs.existsSync(distDir)) fs.mkdirSync(distDir);
+// ── 1. build 폴더 준비 ──────────────────────────────────────────
+const buildDir = path.join(process.cwd(), 'build');
+if (!fs.existsSync(buildDir)) fs.mkdirSync(buildDir);
 
 if (!fs.existsSync(vsixPath)) {
   console.error(`❌ ${vsixName} 파일을 찾을 수 없어요. yarn run build 를 먼저 실행하세요.`);
   process.exit(1);
 }
 
-fs.copyFileSync(vsixPath, path.join(distDir, vsixName));
-console.log(`✅ dist/${vsixName} 복사 완료`);
+fs.copyFileSync(vsixPath, path.join(buildDir, vsixName));
+console.log(`✅ build/${vsixName} 복사 완료`);
 
 // ── 2. install.sh 재생성 ───────────────────────────────────────
 const installSh = `#!/bin/bash
@@ -35,7 +35,7 @@ const installSh = `#!/bin/bash
 
 set -e
 
-VSIX="dist/${vsixName}"
+VSIX="build/${vsixName}"
 EXTENSION_ID="${pkg.publisher || 'kiro'}.${pkg.name}"
 
 echo "📦 Kiro Runner v${version} 설치 중..."
@@ -78,7 +78,7 @@ console.log('─'.repeat(50));
 console.log(`🚀 Kiro Runner v${version} 빌드 완료`);
 console.log('');
 console.log('배포 방법:');
-console.log(`  1) dist/${vsixName} 파일을 팀에 공유`);
+console.log(`  1) build/${vsixName} 파일을 팀에 공유`);
 console.log('  2) 또는 git push 후 팀원이 아래 실행:');
 console.log('     git pull && ./install.sh');
 console.log('─'.repeat(50));

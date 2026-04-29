@@ -146,14 +146,14 @@ yarn install
 ### 빌드 (.vsix 생성)
 ```bash
 yarn run build
-# → kiro-runner-x.x.x.vsix + dist/ 폴더 생성
+# → kiro-runner-x.x.x.vsix + build/ 폴더 생성
 ```
 
 ### 팀 배포
 ```bash
 # 릴리즈 담당자 (한 명만 실행)
 yarn run release
-git add dist/ install.sh README.md
+git add build/ install.sh README.md
 git commit -m "chore: release v0.0.1"
 git push
 
